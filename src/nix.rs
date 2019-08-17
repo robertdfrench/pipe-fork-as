@@ -1,12 +1,10 @@
+// Largely derived from https://github.com/nix-rust/nix/blob/414cc86c0af09fd44454b93b6dc738316b16c43c/src/unistd.rs
+// Copyright (c) 2015 Carl Lerche + nix-rust Authors
 use libc;
 
 use std::mem;
 use std::os::unix::io::RawFd;
 
-/// Create a pair of file descriptors for a unix pipe
-///
-/// Derived from:
-/// https://github.com/nix-rust/nix/blob/414cc86c0af09fd44454b93b6dc738316b16c43c/src/unistd.rs#L1008
 pub fn pipe() -> (RawFd, RawFd) {
     unsafe {
         let mut fds: [libc::c_int; 2] = mem::uninitialized();
@@ -16,11 +14,21 @@ pub fn pipe() -> (RawFd, RawFd) {
     }
 }
 
-/// Close a raw file descriptor
-///
-/// Derived from:
-/// https://github.com/nix-rust/nix/blob/414cc86c0af09fd44454b93b6dc738316b16c43c/src/unistd.rs#L933
 pub fn close(fd: RawFd) {
     let res = unsafe { libc::close(fd) };
     if res == -1 { panic!("Could not close file descriptor"); }
+}
+
+pub enum ForkResult {
+    Parent,
+    Child
+}
+
+pub fn fork() -> ForkResult {
+    let res = unsafe { libc::fork() };
+    if res == -1 { panic!("Could not fork"); }
+    match res {
+        0 => ForkResult::Child,
+        _ => ForkResult::Parent
+    }
 }

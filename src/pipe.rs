@@ -6,13 +6,11 @@ pub struct Pipe {
     output: RawFd
 }
 
-impl Pipe {
-    pub fn new() -> Pipe {
-        let (in_fd, out_fd) = nix::pipe();
-        Pipe {
-            input: in_fd,
-            output: out_fd
-        }
+pub fn new() -> Pipe {
+    let (in_fd, out_fd) = nix::pipe();
+    Pipe {
+        input: in_fd,
+        output: out_fd
     }
 }
 
