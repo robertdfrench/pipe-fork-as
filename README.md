@@ -68,3 +68,7 @@ sudo cargo run $USER
               │ respond (root)  │         │         exit         │
               └─────────────────┘         └──────────────────────┘
 ```
+
+### Acknowledgements
+Some code is lifted from the excellent https://github.com/nix-rust/nix project.
+Their copyright claim is accordingly included in the [LICENSE](LICENSE).
