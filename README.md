@@ -1,9 +1,6 @@
-# Pipe Forkas
-*Oh, you know those pipe forkas, always runnin' around forkin' pipes*
-
-### Abstract
-Run a function as a less-privileged user by forking and communicating the
-response over a pipe. 
+# Pipefork As
+*Run a function as a less-privileged user by forking and communicating the
+response over a pipe.*
 
 ```console
                                                                   
