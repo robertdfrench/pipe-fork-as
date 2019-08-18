@@ -32,3 +32,27 @@ pub fn fork() -> ForkResult {
         _ => ForkResult::Parent
     }
 }
+
+pub fn read(fd: RawFd, buf: &mut [u8]) -> usize {
+    let res = unsafe {
+        libc::read(
+            fd,
+            buf.as_ptr() as *mut libc::c_void,
+            buf.len() as libc::size_t
+        )
+    };
+    if res == -1 { panic!("Could not read from descriptor"); }
+    res as usize
+}
+
+pub fn write(fd: RawFd, buf: &[u8]) -> usize {
+    let res = unsafe {
+        libc::write(
+            fd,
+            buf.as_ptr() as *const libc::c_void,
+            buf.len() as libc::size_t
+        )
+    };
+    if res == -1 { panic!("Could not write to descriptor"); }
+    res as usize
+}
