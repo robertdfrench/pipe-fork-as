@@ -3,6 +3,10 @@ pub mod nix;
 
 use std::env;
 
+fn business_logic() -> String {
+    "eggman".to_string()
+}
+
 fn main() {
     let p = pipe::new();
     let username = env::args().nth(1).unwrap();
@@ -11,10 +15,13 @@ fn main() {
         nix::ForkResult::Child => {
             let uid = nix::getpwnam(&username);
             nix::setuid(uid);
-            p.write("eggman");
+
+            let results = business_logic();
+
+            p.write(&results);
         },
         nix::ForkResult::Parent => {
-            println!("The child says {}", p.read())
+            println!("The result from the unprivileged user is: {}", p.read())
         }
     }
 }
