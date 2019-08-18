@@ -72,3 +72,5 @@ sudo cargo run $USER
 ### Acknowledgements
 Some code is lifted from the excellent https://github.com/nix-rust/nix project.
 Their copyright claim is accordingly included in the [LICENSE](LICENSE).
+
+Social media icon obtained from https://commons.wikimedia.org/wiki/File:Assortment_of_rusty_pipes_1.jpg under (CC BY-SA 4.0).
