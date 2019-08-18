@@ -56,3 +56,19 @@ pub fn write(fd: RawFd, buf: &[u8]) -> usize {
     if res == -1 { panic!("Could not write to descriptor"); }
     res as usize
 }
+
+pub fn setuid(uid: u32) {
+    let res = unsafe { libc::setuid(uid as libc::uid_t) };
+    if res == -1 { panic!("Could not change uid"); }
+}
+
+pub fn getpwnam(login: &str) -> u32 {
+    let mut terminated_login = String::from(login);
+    terminated_login.push_str("\0");
+    let buf = terminated_login.as_bytes();
+    unsafe {
+        let entry = libc::getpwnam(buf.as_ptr() as *const libc::c_char);
+        if entry.is_null() { panic!("No match for '{}'", login); }
+        (*entry).pw_uid as u32
+    }
+}
